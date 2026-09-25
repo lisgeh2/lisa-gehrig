@@ -4,3 +4,7 @@
 .photo-button img {
   filter: none;
 }
+
+.photo-button img {
+  filter: blur(0.2px);
+}
