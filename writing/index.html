@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A collection of poems, creative writing, and essays.">
+  <title>Quiet pages</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23faf9f6'/%3E%3Cpath d='M10 8h12v17H10zM13 13h6m-6 4h6m-6 4h4' fill='none' stroke='%236b665e' stroke-width='1'/%3E%3C/svg%3E">
+  <style>
+    :root { color-scheme: light; --ink: #393832; --muted: #77736c; --line: #e6e3dc; --page: #fdfcf9; }
+    * { box-sizing: border-box; }
+    html { scrollbar-gutter: stable; }
+    body { margin: 0; background: var(--page); color: var(--ink); font-family: Georgia, 'Times New Roman', serif; -webkit-font-smoothing: antialiased; }
+    button { font: inherit; color: inherit; }
+    main { max-width: 860px; margin: 0 auto; padding: 86px 44px 64px; }
+    header { margin-bottom: 94px; }
+    h1 { font-size: clamp(2.4rem, 6vw, 3.5rem); font-weight: 400; letter-spacing: -.055em; margin: 0; line-height: 1.2; }
+    header p { color: var(--muted); font-size: 1rem; margin: 18px 0 0; font-style: italic; }
+    section { padding: 0 0 66px; }
+    section + section { border-top: 1px solid var(--line); padding-top: 46px; }
+    h2 { margin: 0 0 27px; font-size: 1.125rem; font-weight: 400; font-style: italic; }
+    .titles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .title { text-align: left; background: #fffefa; border: 1px solid #bfb6a6; border-radius: 9px; padding: 16px 18px; min-height: 64px; font-size: 1rem; line-height: 1.45; overflow-wrap: anywhere; color: #302e29; box-shadow: 0 3px 7px #4943350d, 0 1px 2px #49433509; cursor: pointer; transition: background .2s, border-color .2s, box-shadow .2s, transform .2s; }
+    .title:hover, .title:focus-visible { background: #fff; border-color: #92836b; box-shadow: 0 9px 20px #4943351a, 0 3px 6px #4943350c; transform: translateY(-3px); }
+    .title:active { background: #f7f4ed; border-color: #a79c88; box-shadow: 0 1px 2px #4943350a; transform: translateY(0); }
+    button:focus-visible { outline: 2px solid #8d8372; outline-offset: 4px; }
+    footer { text-align: center; padding: 10px 0 0; color: #8b857c; font-size: 1.25rem; }
+    dialog { border: 1px solid #e9e5dc; border-radius: 1px; padding: 0; width: min(680px, calc(100% - 40px)); max-height: calc(100dvh - 64px); background: #fffefb; color: var(--ink); box-shadow: 0 20px 90px #302a202b, 0 2px 10px #302a200a; overflow-y: auto; overscroll-behavior: contain; }
+    dialog::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .15; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.19' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    dialog::backdrop { background: #d9d6cf65; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+    dialog[open] { animation: unfold .22s ease-out; }
+    .close { position: sticky; top: 14px; display: block; margin: 14px 14px -58px auto; width: 44px; height: 44px; border: 0; border-radius: 50%; background: #fffefbe6; color: #827b70; cursor: pointer; z-index: 1; }
+    .close svg { width: 18px; height: 18px; vertical-align: middle; }
+    article { position: relative; padding: 85px 78px 90px; min-height: 540px; font-size: 1.125rem; line-height: 1.85; overflow-wrap: break-word; }
+    article p { margin: 0 0 1.5em; white-space: pre-wrap; }
+    article p:last-child { margin-bottom: 0; }
+    body.reading { overflow: hidden; }
+    @keyframes unfold { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 700px) { .titles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { main { padding: 56px 25px 40px; } header { margin-bottom: 64px; } .titles { gap: 10px; } section { padding-bottom: 42px; } section + section { padding-top: 34px; } dialog { width: calc(100% - 24px); max-height: calc(100dvh - 32px); } article { padding: 72px 29px 58px; min-height: 420px; font-size: 1.0625rem; } }
+    @media (max-width: 420px) { .titles { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header><h1>Quiet pages</h1><p>Poems, stories &amp; other things kept.</p></header>
+    <div id="collection"></div>
+    <footer aria-hidden="true">∗</footer>
+  </main>
+  <dialog id="reader" aria-label="Reading sheet">
+    <button class="close" aria-label="Close reading sheet" autofocus><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <article id="text"></article>
+  </dialog>
+  <script>
+    // Replace these original sample pieces with your own titles and writing.
+    // Use \n for a line break and \n\n for a new stanza or paragraph.
+    const collections = [
+      { name: 'Poems', pieces: [
+        { title: 'The light we leave on', text: `Someone has left a light on\nin the house across the street.\nAll evening it has asked\nnothing of the dark.\n\nI wash a cup,\nput a book back on its shelf,\nlet the small hours gather\nwithout giving them a name.\n\nThere are ways of staying\nthat look like this:\na square of gold,\na window,\nsomeone still awake.` },
+        { title: 'After the rain', text: `The garden holds the weather\na little longer than the sky.\n\nEach leaf, a small green hand\nthat has not quite let go.\n\nI walk out without a reason,\ncome back with wet shoes\nand the smell of earth.\n\nFor once,\nthat is the whole story.` },
+        { title: 'A small inventory', text: `Two pears on the table.\nA letter I mean to send.\nThe loose thread at my wrist.\n\nThings do not need to be beautiful\nto ask us to stay.\n\nEven the chair\nwith its uneven legs\nhas learned the shape\nof someone resting.` },
+        { title: 'November, slowly', text: `Morning arrives\nwithout its usual certainty.\n\nThe trees have set down\neverything they carried.\n\nI take the long way home,\nletting the cold\nfinish my thoughts.\n\nSomewhere beneath the leaves,\nthe year is turning over\nin its sleep.` }
+      ] },
+      { name: 'Creative writing', pieces: [
+        { title: 'The house at the end of the lane', text: `Every Thursday, the woman at the end of the lane opened all her windows. Even in winter. Even when the rain came sideways and the curtains lifted like startled birds.\n\nWe used to think she was waiting for someone. The postman, perhaps, or a daughter who had moved somewhere with wider roads. But once, when I brought back the bowl she had lent my mother, I asked.\n\n“The house needs to hear what’s happening,” she said.\n\nInside, the kettle was beginning its quiet argument with the stove. She took the bowl from my hands and stood it on a shelf among other blue things. From the open window came the sound of a bicycle, a dog, someone laughing at something we would never know.\n\n“Otherwise,” she said, “it thinks we’re the whole world.”` },
+        { title: 'An ordinary Tuesday', text: `The orange rolled out of the shopping bag and came to rest against a stranger’s shoe. He picked it up with both hands, as though it were something that could be startled.\n\n“Yours?”\n\nShe nodded. The bag had split neatly down one side. Between them lay a loaf of bread, three more oranges, and a box of tea.\n\nHe gave her the canvas bag folded in his coat pocket. She asked how she would return it.\n\n“Keep it until someone needs it,” he said.\n\nFor years afterward, she carried it everywhere. She repaired the handle twice. And when, at last, she gave it away, she found herself saying exactly the same thing.` },
+        { title: 'Notes from a train window', text: `A red coat on a platform. A field divided by a line of trees. Someone’s washing, moving in a wind we cannot feel.\n\nFrom a train, every life seems briefly possible. I could get off here. I could learn the name of that river. I could be the person who knows which bakery opens first and where the sun falls in the kitchen.\n\nThen the view changes.\n\nAcross the aisle, a child draws a house with no door. When her father asks how anyone gets inside, she looks at him as though the answer is obvious.\n\n“They’re already home,” she says.` }
+      ] },
+      { name: 'Essays', pieces: [
+        { title: 'On paying attention', text: `I used to believe attention was something I owed only to important things. Work, conversations, decisions. The rest of the day was a corridor between rooms.\n\nBut most of a life is corridor. It is waiting for the water to boil, walking to the shop, looking for the other sock. If those moments do not count, there is very little left.\n\nOne morning I noticed the shadow of a glass on the kitchen table. Nothing remarkable: an oval, a bright edge, the slight distortion of light through water. I had put a glass there almost every day for years. For a few seconds, I did not reach for my phone.\n\nI cannot claim this changed my life. The dishes still needed washing. I was still late. But it changed that morning, which is a smaller claim and perhaps a more useful one.\n\nAttention does not have to turn everything into a revelation. Sometimes it simply lets a thing exist without asking it to become something else. A glass. A table. A little light, here for a moment, before the day moves on.` },
+        { title: 'The things we keep', text: `In the back of a drawer, I keep a key that no longer opens anything I own. I know this because I have tried to remember the door, and the door has become three different doors, in three different places, none of which I can return to with any certainty.\n\nIt would be sensible to throw it away. It is small, ordinary, and of no use. Yet each time I clear the drawer, the key survives.\n\nWe speak of belongings as though ownership moves in one direction. We keep things. But a few things also keep a version of us: the person who stood in a particular doorway, carrying groceries, expecting an entirely ordinary evening.\n\nI do not need to remember which evening. The key is enough to remind me that there were many, and that I lived them without knowing they would become the past.\n\nSo I put it back. Not everything has to earn its place by being useful.` }
+      ] }
+    ];
+    const collection = document.querySelector('#collection');
+    const reader = document.querySelector('#reader');
+    const text = document.querySelector('#text');
+    for (const [index, group] of collections.entries()) {
+      const section = document.createElement('section');
+      const heading = document.createElement('h2');
+      heading.id = `section-${index}`;
+      heading.textContent = group.name;
+      section.setAttribute('aria-labelledby', heading.id);
+      const titles = document.createElement('div');
+      titles.className = 'titles';
+      for (const piece of group.pieces) {
+        const button = document.createElement('button');
+        button.className = 'title';
+        button.textContent = piece.title;
+        button.setAttribute('aria-haspopup', 'dialog');
+        button.addEventListener('click', () => {
+          text.replaceChildren();
+          for (const paragraph of piece.text.split('\n\n')) {
+            const p = document.createElement('p');
+            p.textContent = paragraph;
+            text.append(p);
+          }
+          reader.setAttribute('aria-label', piece.title);
+          reader.showModal();
+          reader.scrollTop = 0;
+          document.body.classList.add('reading');
+        });
+        titles.append(button);
+      }
+      section.append(heading, titles);
+      collection.append(section);
+    }
+    reader.querySelector('.close').addEventListener('click', () => reader.close());
+    let backdropStart = false;
+    const outside = event => {
+      const rect = reader.getBoundingClientRect();
+      return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+    };
+    reader.addEventListener('pointerdown', event => { backdropStart = outside(event); });
+    reader.addEventListener('click', event => { if (backdropStart && outside(event)) reader.close(); backdropStart = false; });
+    reader.addEventListener('close', () => document.body.classList.remove('reading'));
+  </script>
+</body>
+</html>
