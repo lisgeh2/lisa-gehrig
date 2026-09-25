@@ -1,6 +1,6 @@
 // Number of photos in each folder.
 // Change these numbers to match your collections.
-const photoCounts = [7, 6, 6];
+const photoCounts = [7, 6, 7, 8, 4, 6, 4];
 
 const photos = photoCounts.map((count, sectionIndex) =>
   Array.from({ length: count }, (_, imageIndex) => {
