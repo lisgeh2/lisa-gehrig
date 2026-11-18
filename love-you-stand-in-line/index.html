@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>love, you stand in line</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Colors ---------- */
+    :root {
+      --bg: #f4efe8;          /* warm paper */
+      --card: #fffdf9;
+      --ink: #2b2522;         /* main text */
+      --muted: #8a7f78;       /* secondary text */
+      --accent: #e49236;      /* terracotta */
+      --accent-soft: #d8cebc;
+    }
+
+    /* ---------- Page ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Montserrat", system-ui, sans-serif;
+    }
+
+    /* ---------- Card ---------- */
+    .song {
+      width: 100%;
+      max-width: 380px;
+      padding: 28px;
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(43, 37, 34, 0.10);
+      text-align: center;
+    }
+
+    /* ---------- Cover art ---------- */
+    /* Square cover that fits ANY image size or shape:
+       the image zooms in to fill the square and is
+       cropped evenly from the centre, never stretched. */
+    .cover {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center;   /* change to "top" to keep faces in view */
+      border-radius: 14px;
+      margin-bottom: 24px;
+      background: var(--accent-soft);
+    }
+
+    /* ---------- Text ---------- */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .artist {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    /* ---------- Player ---------- */
+    audio {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="song">
+    <!-- Put your image next to this HTML file.
+         If it has another name, change the src below. -->
+    <img class="cover" src="cover.jpg" alt="cover art">
+
+    <span class="badge">Demo version</span>
+    <h1>LOVE, YOU STAND IN LINE</h1>
+    <p class="artist">Lisa Gehrig</p>
+
+    <!-- Put your audio file next to this HTML file and change the name below -->
+    <audio controls preload="metadata">
+      <source src="i-promise-demo.mp3" type="audio/mpeg">
+      Your browser doesn't support audio playback.
+    </audio>
+
+    <p class="note">thanks for listening.</p>
+  </main>
+
+</body>
+</html>
