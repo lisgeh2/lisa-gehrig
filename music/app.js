@@ -46,13 +46,18 @@ const clock = (seconds) =>
     ? `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`
     : "–:––";
 const quote = (text) => String(text).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
-const hasMedia = (item) => Boolean(item.audio || item.video || item.photo);
+const hasMedia = (item) => Boolean(item.audio || item.video || (item.photos && item.photos.length));
 
 
 /* ---------- 2. The strip ---------- */
 
 function buildStrip() {
   ITEMS.forEach((item, index) => {
+    // like a cassette: side A first, then side B with the outtakes
+    const side = item.side || "A";
+    const previous = ITEMS[index - 1];
+    if (!previous || (previous.side || "A") !== side) stripList.append(sideLabel(side));
+
     const li = document.createElement("li");
     li.innerHTML = `
       <button type="button" class="card" style="--i:${index}" aria-pressed="false">
@@ -69,6 +74,16 @@ function buildStrip() {
     card.addEventListener("click", () => select(item, { byClick: true }));
     stripList.append(li);
   });
+}
+
+function sideLabel(side) {
+  const li = document.createElement("li");
+  li.className = "strip__side";
+  li.setAttribute("aria-hidden", "true");
+  li.innerHTML = side === "A"
+    ? `<span>side A</span><span>the real stuff</span>`
+    : `<span>side B</span><span>outtakes &amp; silly stuff</span>`;
+  return li;
 }
 
 function coverHTML(item) {
@@ -189,10 +204,13 @@ function renderStage(item) {
     stage.innerHTML = cassetteHTML(item);
     connectCassette(item);
   } else if (item.video) {
-    stage.innerHTML = `<video class="screen" src="${item.video}" controls playsinline preload="metadata"></video>`;
+    const poster = item.cover ? `poster="${item.cover}"` : "";
+    stage.innerHTML = `<video class="screen" src="${item.video}" ${poster} controls playsinline preload="metadata"></video>`;
     connectVideo(item);
-  } else if (item.photo) {
-    stage.innerHTML = `<img class="photo" src="${item.photo}" alt="${quote(item.title)}">`;
+  } else if (item.photos && item.photos.length) {
+    const pictures = item.photos
+      .map((src) => `<img class="photo" src="${src}" alt="${quote(item.title)}">`).join("");
+    stage.innerHTML = `<div class="photos">${pictures}</div>`;
   } else {
     stage.innerHTML = soonHTML(item);
   }

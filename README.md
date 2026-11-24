@@ -58,7 +58,19 @@ credits and links. Change the text there; no other file needs touching.
 
 To add a clip, put the video into `music/media/clips/` and write its path
 into the card's `video` field, e.g. `video: "media/clips/all-i-need.mp4"`.
-Until then the card says *coming soon*.
+Until then the card says *coming soon*. Cards marked `side: "B"` land in the
+outtakes part of the strip.
+
+Phone videos are too big for the web (and often HEVC, which many browsers
+can't play). Shrink them first, plus a cover picture, with
+[ffmpeg](https://ffmpeg.org):
+
+```bash
+ffmpeg -i original.mp4 -vf "scale=-2:1280" -c:v libx264 -crf 25 -c:a aac -b:a 128k -movflags +faststart music/media/clips/new-clip.mp4
+ffmpeg -ss 3 -i music/media/clips/new-clip.mp4 -frames:v 1 music/media/clips/new-clip.jpg
+```
+
+(For landscape videos use `scale=-2:720`.) GitHub refuses files over 100 MB.
 
 Other texts (intro, "more about me", "let's make something") are plain HTML
 in [`music/index.html`](music/index.html).

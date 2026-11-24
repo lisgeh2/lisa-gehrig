@@ -333,6 +333,14 @@ em { font-family: var(--serif); font-size: 1.1em; }
 }
 .photo { object-fit: cover; }
 
+/* several pictures (e.g. a story in three parts) sit side by side */
+.photos {
+  display: flex;
+  gap: 12px;
+  max-width: 100%;
+}
+.photos .photo { min-width: 0; height: auto; }
+
 /* --- "coming soon": a note pinned to the wall --- */
 
 .soon {
@@ -514,6 +522,24 @@ body.is-playing .card[aria-pressed="true"] .card__dot {
   text-transform: uppercase;
   color: var(--muted);
 }
+
+/* "side A" / "side B" labels between the cards, written sideways like on a cassette */
+.strip__list > li.strip__side {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 0 2px 6px;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.strip__side span:first-child { color: var(--ink); font-weight: 500; }
+.strip__side:not(:first-child) { margin-left: 28px; }   /* a little gap before side B */
 
 /* "things I made ▾" gives the cards a little hello-wave */
 .strip.is-waving .card { animation: wave 0.7s var(--ease) calc(var(--i) * 60ms); }

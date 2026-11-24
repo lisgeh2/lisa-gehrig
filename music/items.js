@@ -5,6 +5,10 @@
    Click a card → it goes onto the stage (middle), its story shows on the
    right, and the whole page takes on its colour ("tint").
 
+   Like a cassette, the strip has two sides:
+     side A  the real work          (no "side" field needed)
+     side B  outtakes & silly stuff (write  side: "B")
+
    Fields:
      id       short name, used in the link (…/music/#all-i-need)
      title    big title
@@ -12,19 +16,23 @@
      year     shown above the title
      tint     background colour of the page while this card is selected
      cover    image for the card (leave "" for a typographic card)
-     audio    an mp3            → plays on the cassette
-     video    an mp4 / webm     → plays on the stage
-     photo    a picture         → shown on the stage
-              (leave audio/video "" and the card says "coming soon")
+     audio    an mp3                 → plays on the cassette
+     video    an mp4                 → plays on the stage
+     photos   one or more pictures   → shown on the stage
+              (no audio/video/photos → the card says "coming soon")
      credits  list of [role, who]
      text     list of paragraphs (simple HTML like <em> or <a> is fine)
      links    list of [label, url]
 
    To add a clip: put the file into media/clips/ and write its path
    into "video", e.g.  video: "media/clips/all-i-need.mp4"
+   Phone videos are big: shrink them first (see the README).
    ========================================================================== */
 
 const ITEMS = [
+
+  /* ------------------------------ SIDE A ------------------------------ */
+
   {
     id: "love-you-stand-in-line",
     title: "love, you stand in line",
@@ -62,14 +70,14 @@ const ITEMS = [
     tag: "radiohead, by ear",
     year: "",
     tint: "#dde4ea",
-    cover: "",
-    video: "", // e.g. "media/clips/all-i-need.mp4"
+    cover: "media/clips/all-i-need.jpg",
+    video: "media/clips/all-i-need.mp4",
     credits: [
       ["original", "Radiohead"],
       ["taken apart & rebuilt", "lisa"],
     ],
     text: [
-      "My favourite game: hear a song, take it apart by ear as fast as I can (chords, inversions, melody, countermelodies), play it back, then jam with it.",
+      "My favourite game: hear a song, take it apart by ear as fast as I can (chords, inversions, melody, countermelodies), then build it back up, track by track.",
       "This one was worth every minute.",
     ],
     links: [],
@@ -81,8 +89,8 @@ const ITEMS = [
     tag: "just piano & voice",
     year: "",
     tint: "#efe8d8",
-    cover: "",
-    video: "", // e.g. "media/clips/piano-song.mp4"
+    cover: "media/clips/piano-song.jpg",
+    video: "media/clips/piano-song.mp4",
     credits: [
       ["written, played & sung", "lisa"],
     ],
@@ -98,8 +106,8 @@ const ITEMS = [
     tag: "improvised, 4 hands",
     year: "",
     tint: "#f2e5c4",
-    cover: "",
-    video: "", // e.g. "media/clips/boogie.mp4"
+    cover: "media/clips/boogie.jpg",
+    video: "media/clips/boogie.mp4",
     credits: [
       ["piano", "lisa & a friend"],
       ["plan", "none whatsoever"],
@@ -108,6 +116,29 @@ const ITEMS = [
       "The concert was over, the piano was still there. A friend and I improvised a boogie: nothing planned, just two people having way too much fun.",
     ],
     links: [],
+  },
+
+  {
+    id: "schwamenair",
+    title: "SchwamenAir",
+    tag: "our flat's festival",
+    year: "every september",
+    tint: "#e6ead9",
+    cover: "media/schwamenair-garden.jpg",
+    video: "media/clips/schwamenair.mp4",
+    credits: [
+      ["organised by", "our flat"],
+      ["stages", "two tiny ones"],
+      ["bands", "six"],
+      ["last slot of the night", "Ceramic Doves, me on keys"],
+    ],
+    text: [
+      "Once a year, my flat turns its garden into a festival: two little stages, six bands, friends and neighbours everywhere.",
+      "This year we closed the night with Ceramic Doves.",
+    ],
+    links: [
+      ["schwamenair.ch", "https://schwamenair.ch/"],
+    ],
   },
 
   {
@@ -135,12 +166,13 @@ const ITEMS = [
     tag: "keys · 3rd at band-it",
     year: "former band",
     tint: "#e7e1da",
-    cover: "media/ceramic-doves.jpg",
-    photo: "media/ceramic-doves.jpg",
+    cover: "media/ceramic-doves-band.jpg",
+    photos: ["media/ceramic-doves-band.jpg"],
     credits: [
       ["keys & backing vocals", "lisa"],
       ["band-it 2025", "3rd place"],
       ["band coach", "Moritz von Tobel (VSS Bounce, Vorstadt Sounds)"],
+      ["photo", "Jeremie Luke Dubois"],
     ],
     text: [
       "My former band. Loud, sweaty, a lot of fun.",
@@ -150,5 +182,116 @@ const ITEMS = [
       ["band-it", "https://www.band-it.ch/band/2025/ceramic-doves"],
       ["ceramic doves", "https://ceramicdoves.ch"],
     ],
+  },
+
+  /* ------------------------------ SIDE B ------------------------------ */
+
+  {
+    id: "bass",
+    side: "B",
+    title: "bass, just because",
+    tag: "not my main instrument",
+    year: "",
+    tint: "#dfe3ef",
+    cover: "media/clips/bass.jpg",
+    video: "media/clips/bass.mp4",
+    credits: [
+      ["bass", "lisa"],
+      ["seriousness", "low"],
+    ],
+    text: [
+      "Piano is home. Everything else is a playground.",
+    ],
+    links: [],
+  },
+
+  {
+    id: "drums-fail",
+    side: "B",
+    title: "drums",
+    tag: "it went great (it didn't)",
+    year: "",
+    tint: "#f0e0da",
+    cover: "media/clips/drums-fail.jpg",
+    video: "media/clips/drums-fail.mp4",
+    credits: [
+      ["drums", "lisa, a bit"],
+    ],
+    text: [
+      "I play a bit of drums. This is the bit.",
+    ],
+    links: [],
+  },
+
+  {
+    id: "first-drum-kit",
+    side: "B",
+    title: "my first drum kit",
+    tag: "a very early setup",
+    year: "",
+    tint: "#ece4d6",
+    cover: "media/first-drum-kit.jpg",
+    photos: ["media/first-drum-kit.jpg"],
+    credits: [],
+    text: [
+      "Every studio starts somewhere.",
+    ],
+    links: [],
+  },
+
+  {
+    id: "cellar",
+    side: "B",
+    title: "a band room in a cellar",
+    tag: "self-made",
+    year: "",
+    tint: "#e4e1da",
+    cover: "media/clips/cellar.jpg",
+    video: "media/clips/cellar.mp4",
+    credits: [
+      ["cables", "too many"],
+      ["budget", "very small"],
+    ],
+    text: [
+      "A mixer, some speakers, a drum kit and far too many cables: a home-made band room in a cellar, made for jamming.",
+    ],
+    links: [],
+  },
+
+  {
+    id: "celery",
+    side: "B",
+    title: "celery, keyboard, bike",
+    tag: "a very important poll",
+    year: "",
+    tint: "#e5eedc",
+    cover: "media/celery-2.jpg",
+    photos: ["media/celery-1.jpg", "media/celery-2.jpg", "media/celery-3.jpg"],
+    credits: [
+      ["problem", "one celery, one MIDI keyboard, one bike"],
+      ["solution", "still unclear"],
+    ],
+    text: [
+      "How do you take a celery and a MIDI keyboard home on a bike? I asked the internet.",
+    ],
+    links: [],
+  },
+
+  {
+    id: "morning-after",
+    side: "B",
+    title: "the morning after",
+    tag: "schwamenair, afterwards",
+    year: "",
+    tint: "#efe6dc",
+    cover: "media/morning-after.jpg",
+    photos: ["media/morning-after.jpg"],
+    credits: [
+      ["sleep", "next to the mixer"],
+    ],
+    text: [
+      "Festivals are a lot of work. Worth it.",
+    ],
+    links: [],
   },
 ];
