@@ -54,8 +54,8 @@ const ITEMS = [
       ["promotion", "nobody. i told no one."],
     ],
     text: [
-      "The first song I ever finished. I wrote it, played every instrument, recorded, mixed and mastered it myself, in my bedroom.",
-      "I put it on mx3 and told nobody. Two days later, radio LFM found it, played it at prime time and introduced me as a new artist people should discover.",
+      "The first song I ever finished, made in my bedroom.",
+      "I put it on mx3 and told nobody. Two days later, radio LFM played it at prime time and introduced me as a new artist to discover.",
       "<em>Now imagine what we could make together.</em>",
     ],
     links: [
@@ -77,8 +77,7 @@ const ITEMS = [
       ["taken apart & rebuilt", "lisa"],
     ],
     text: [
-      "My favourite game: hear a song, take it apart by ear as fast as I can (chords, inversions, melody, countermelodies), then build it back up, track by track.",
-      "Rebuilding a song like this teaches you how it's made, and that's exactly what I bring to yours.",
+      "Taken apart by ear, rebuilt track by track. It teaches you how songs are made, and that's what I bring to yours.",
     ],
     links: [],
   },
@@ -95,7 +94,7 @@ const ITEMS = [
       ["written, played & sung", "lisa"],
     ],
     text: [
-      "Just a piano, my voice and a song I wrote. Before any production, a song has to work like this.",
+      "Before any production, a song has to work like this.",
     ],
     links: [],
   },
@@ -110,10 +109,9 @@ const ITEMS = [
     video: "media/clips/boogie.mp4",
     credits: [
       ["piano", "lisa & a friend"],
-      ["arrangement", "made up on the spot"],
     ],
     text: [
-      "After a concert, a friend and I sat down at the piano and improvised a boogie, four hands, listening to each other. That's what making music together feels like at its best.",
+      "After a concert, a friend and I sat down at the piano and just listened to each other. Making music together at its best.",
     ],
     links: [],
   },
@@ -131,8 +129,7 @@ const ITEMS = [
       ["voices", "a 20-person theatre ensemble"],
     ],
     text: [
-      "I composed the choir for a 20-person theatre ensemble: an adaptation of “Zombie”.",
-      "I also wrote an original song for it (video coming).",
+      "An adaptation of “Zombie”, plus an original song I wrote for the show. Video coming.",
     ],
     links: [],
   },
@@ -152,8 +149,7 @@ const ITEMS = [
       ["photo", "Jeremie Luke Dubois"],
     ],
     text: [
-      "My former band: years of rehearsing, writing and playing live together.",
-      "We played Openair Greifensee (same bill as Lo & Leduc), Moods, Althörnli Openair, Powerplay Nights and Vorstadt Sounds Festival.",
+      "My former band. We played Openair Greifensee (same bill as Lo & Leduc), Moods, Althörnli Openair, Powerplay Nights and Vorstadt Sounds Festival.",
     ],
     links: [
       ["band-it", "https://www.band-it.ch/band/2025/ceramic-doves"],
@@ -195,7 +191,7 @@ const ITEMS = [
       ["drums", "lisa, a bit"],
     ],
     text: [
-      "I play a bit of drums. This is the bit.",
+      "This is the bit.",
     ],
     links: [],
   },
@@ -230,7 +226,7 @@ const ITEMS = [
       ["budget", "very small"],
     ],
     text: [
-      "A mixer, some speakers, a drum kit and far too many cables: a home-made band room in a cellar, made for jamming.",
+      "A mixer, speakers, a drum kit: a home-made band room for jamming.",
     ],
     links: [],
   },
@@ -249,7 +245,7 @@ const ITEMS = [
       ["solution", "still unclear"],
     ],
     text: [
-      "How do you take a celery and a MIDI keyboard home on a bike? I asked the internet.",
+      "I asked the internet.",
     ],
     links: [],
   },
