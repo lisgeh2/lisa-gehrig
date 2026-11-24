@@ -28,8 +28,8 @@
   --tape: #231f1c;
 
   --pad: clamp(20px, 3vw, 46px);
-  --side: clamp(250px, 23vw, 330px);
-  --info: clamp(280px, 25vw, 380px);
+  --side: clamp(250px, 25vw, 440px);
+  --info: clamp(280px, 27vw, 480px);
   --strip: clamp(230px, 35vh, 340px);
   --cover-h: calc(var(--strip) - 62px);   /* strip minus the two label lines */
   --cover-w: calc(var(--cover-h) * 0.75); /* 3:4 cards */
@@ -50,7 +50,7 @@ body {
   margin: 0;
   background: var(--tint);
   color: var(--ink);
-  font: 15px/1.55 var(--sans);
+  font: clamp(15px, 0.55vw + 8px, 17px)/1.55 var(--sans);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.9s var(--ease);
 }
@@ -124,12 +124,31 @@ em { font-family: var(--serif); font-size: 1.1em; }
   gap: 4px;
 }
 .menu > * {
-  font-size: 16px;
+  font-size: 1.05em;
   color: var(--muted);
   text-decoration: none;
   transition: color 0.3s;
 }
 .menu > *:hover { color: var(--ink); }
+
+/* the two "get to know me" links stand out: ink colour and a little arrow */
+.menu .menu__big,
+.menu .menu__more { color: var(--ink); }
+.menu__big {
+  margin-bottom: 4px;
+  font: italic 400 clamp(22px, 1.7vw, 28px)/1.15 var(--serif) !important;
+  text-align: left;
+}
+.menu__big::after,
+.menu__more::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--pink);
+  transition: transform 0.3s var(--ease);
+}
+.menu__big:hover::after,
+.menu__more:hover::after { transform: translateX(4px); }
 
 /* "let's make something" gets a blinking record light */
 .menu .menu__hot { color: var(--ink); }
@@ -769,9 +788,23 @@ button.cta { font: inherit; font-weight: 500; cursor: pointer; }
 }
 
 /* short laptop screens: give the screen back to the music */
-@media (min-width: 901px) and (max-height: 760px) {
+@media (min-width: 901px) and (max-height: 900px) {
   .toy__hint { display: none; }
   .keys { height: 70px; }
+  .toy { padding-top: 8px; padding-bottom: 14px; }
+  .menu { margin-top: 18px; }
+}
+@media (min-width: 901px) and (max-height: 760px) {
+  .intro { font-size: 14px; }
+  .menu > * { font-size: 15px; }
+  .menu .menu__big { font-size: 20px !important; }
+  .keys { height: 56px; }
+  .toy__chords { display: none; }
+}
+@media (min-width: 901px) and (max-height: 620px) {
+  .intro { margin-top: 8px; line-height: 1.45; }
+  .menu { margin-top: 12px; gap: 2px; }
+  .keys { height: 48px; }
 }
 
 
