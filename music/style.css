@@ -541,6 +541,37 @@ body.is-playing .card[aria-pressed="true"] .card__dot {
 .strip__side span:first-child { color: var(--ink); font-weight: 500; }
 .strip__side:not(:first-child) { margin-left: 28px; }   /* a little gap before side B */
 
+/* side B: folded away until "flip the tape" is clicked */
+.strip:not(.show-b) .is-side-b { display: none; }
+.strip.show-b .is-side-b { animation: arrive 0.6s var(--ease) calc(var(--b) * 70ms) both; }
+
+/* the "flip the tape" button always peeks in at the right edge of the strip */
+.strip__side:has(.flip) {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: var(--tint);
+  transition: background-color 0.9s var(--ease);
+}
+
+.flip {
+  display: flex;
+  gap: 6px;
+  padding: 10px 6px;
+  border: 1px dashed var(--hair);
+  border-radius: 999px;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--ink);
+  transition: border-color 0.3s, background-color 0.3s;
+}
+.flip:hover { border-color: var(--ink); background: rgba(255, 255, 255, 0.4); }
+.flip span:first-child { font-weight: 500; }
+.flip__hint { color: var(--pink); }
+
 /* "things I made ▾" gives the cards a little hello-wave */
 .strip.is-waving .card { animation: wave 0.7s var(--ease) calc(var(--i) * 60ms); }
 @keyframes wave { 40% { transform: translateY(-10px); } }

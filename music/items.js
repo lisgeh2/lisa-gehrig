@@ -119,29 +119,6 @@ const ITEMS = [
   },
 
   {
-    id: "schwamenair",
-    title: "SchwamenAir",
-    tag: "our flat's festival",
-    year: "every september",
-    tint: "#e6ead9",
-    cover: "media/schwamenair-garden.jpg",
-    video: "media/clips/schwamenair.mp4",
-    credits: [
-      ["organised by", "our flat"],
-      ["stages", "two tiny ones"],
-      ["bands", "six"],
-      ["last slot of the night", "Ceramic Doves, me on keys"],
-    ],
-    text: [
-      "Once a year, my flat turns its garden into a festival: two little stages, six bands, friends and neighbours everywhere.",
-      "This year we closed the night with Ceramic Doves.",
-    ],
-    links: [
-      ["schwamenair.ch", "https://schwamenair.ch/"],
-    ],
-  },
-
-  {
     id: "zombie",
     title: "Zombie",
     tag: "theatre choir for 20",
@@ -277,21 +254,4 @@ const ITEMS = [
     links: [],
   },
 
-  {
-    id: "morning-after",
-    side: "B",
-    title: "the morning after",
-    tag: "schwamenair, afterwards",
-    year: "",
-    tint: "#efe6dc",
-    cover: "media/morning-after.jpg",
-    photos: ["media/morning-after.jpg"],
-    credits: [
-      ["sleep", "next to the mixer"],
-    ],
-    text: [
-      "Festivals are a lot of work. Worth it.",
-    ],
-    links: [],
-  },
 ];

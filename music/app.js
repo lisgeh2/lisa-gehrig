@@ -59,6 +59,10 @@ function buildStrip() {
     if (!previous || (previous.side || "A") !== side) stripList.append(sideLabel(side));
 
     const li = document.createElement("li");
+    if (side === "B") {
+      li.className = "is-side-b";
+      li.style.setProperty("--b", stripList.querySelectorAll(".is-side-b").length);  // for the staggered fade-in
+    }
     li.innerHTML = `
       <button type="button" class="card" style="--i:${index}" aria-pressed="false">
         <span class="card__label">
@@ -79,11 +83,33 @@ function buildStrip() {
 function sideLabel(side) {
   const li = document.createElement("li");
   li.className = "strip__side";
-  li.setAttribute("aria-hidden", "true");
-  li.innerHTML = side === "A"
-    ? `<span>side A</span><span>the real stuff</span>`
-    : `<span>side B</span><span>outtakes &amp; silly stuff</span>`;
+
+  if (side === "A") {
+    li.setAttribute("aria-hidden", "true");
+    li.innerHTML = `<span>side A</span><span>the real stuff</span>`;
+    return li;
+  }
+
+  // side B stays folded away until someone is curious enough to flip the tape
+  li.innerHTML = `
+    <button type="button" class="flip" aria-expanded="false">
+      <span>side B</span><span class="flip__hint">flip the tape ▸</span>
+    </button>`;
+  li.querySelector(".flip").addEventListener("click", () => showSideB(!strip.classList.contains("show-b")));
   return li;
+}
+
+function showSideB(open) {
+  strip.classList.toggle("show-b", open);
+  const flip = strip.querySelector(".flip");
+  flip.setAttribute("aria-expanded", String(open));
+  flip.querySelector(".flip__hint").textContent = open ? "◂ fold away" : "flip the tape ▸";
+  // glide the strip so the first side B card comes into view
+  if (open) {
+    const firstB = stripList.querySelector(".is-side-b");
+    const distance = firstB.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+    strip.scrollTo({ left: strip.scrollLeft + distance - 120, behavior: wantsCalm.matches ? "auto" : "smooth" });
+  }
 }
 
 function coverHTML(item) {
@@ -139,7 +165,8 @@ document.querySelector('a[href="#strip"]').addEventListener("click", (event) => 
 });
 strip.addEventListener("animationend", (event) => {
   // the cards wave one after another: wait for the last one
-  if (event.target.closest("li") === stripList.lastElementChild) strip.classList.remove("is-waving");
+  const visibleCards = [...stripList.querySelectorAll(".card")].filter((card) => card.offsetParent);
+  if (event.target === visibleCards.at(-1)) strip.classList.remove("is-waving");
 });
 
 
@@ -465,4 +492,5 @@ updateMail();
 
 // open the card from the link (…/music/#boogie), otherwise the radio song
 const linked = ITEMS.find((item) => "#" + item.id === location.hash);
+if (linked && linked.side === "B") showSideB(true);
 select(linked || ITEMS[0]);
