@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lisa Gehrig: let's make music</title>
+  <meta name="description" content="Lisa Gehrig: pianist, songwriter and bedroom producer from Zürich. Co-writing, production, keys for your band. Let's make something together.">
+  <meta name="author" content="Lisa Gehrig">
+  <meta property="og:title" content="Lisa Gehrig: let's make music">
+  <meta property="og:description" content="Pianist, songwriter and bedroom producer from Zürich. My first song went from my bedroom to the radio in two days. Let's make something together.">
+  <link rel="icon" type="image/png" href="../icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== LEFT: who I am + menu ===== -->
+  <header class="side">
+    <h1 class="name">Lisa Gehrig</h1>
+
+    <p class="intro">
+      Pianist, songwriter &amp; bedroom producer from Zürich.
+      I hear a song, take it apart by ear, and then jam with it.
+      My first song went from my bedroom to the radio in two days.
+      <em>Wanna make something?</em>
+    </p>
+
+    <nav class="menu" aria-label="Menu">
+      <button type="button" data-open="about">more about me</button>
+      <button type="button" data-open="together" class="menu__hot">let's make something</button>
+      <a href="#strip">things I made <span aria-hidden="true">▾</span></a>
+    </nav>
+  </header>
+
+  <!-- ===== MIDDLE: the stage (cassette, video or photo, filled by app.js) ===== -->
+  <main class="stage" id="stage" aria-label="Now on stage"></main>
+
+  <!-- ===== RIGHT: the story of whatever is on stage (filled by app.js) ===== -->
+  <article class="panel" id="panel" aria-live="polite"></article>
+
+  <!-- ===== LEFT, LOWER: the toy piano (piano.js) ===== -->
+  <section class="toy" aria-labelledby="toy-title">
+    <div class="toy__head">
+      <h2 class="toy__title" id="toy-title">go on, play something</h2>
+      <button type="button" class="toy__jam" id="jam" aria-pressed="false">jam with me</button>
+    </div>
+    <div class="keys" id="keys" aria-hidden="true"></div>
+    <p class="toy__chords" id="chords" aria-hidden="true">
+      <span>Am</span><span>F</span><span>C</span><span>G</span>
+    </p>
+    <p class="toy__hint">Mouse, finger or keyboard (A&nbsp;S&nbsp;D&nbsp;F…). While we jam, the glowing keys fit the chord.</p>
+  </section>
+
+  <!-- ===== BOTTOM: the strip of songs & clips (filled by app.js from items.js) ===== -->
+  <section class="strip" id="strip" aria-label="Songs and clips">
+    <ul class="strip__list" id="strip-list"></ul>
+  </section>
+
+</div>
+
+<!-- One shared player for songs. The cassette on stage is its remote control. -->
+<audio id="song" preload="metadata"></audio>
+
+
+<!-- ===== SHEET: more about me ===== -->
+<dialog class="sheet" id="about" aria-labelledby="about-title">
+  <div class="sheet__inner">
+    <button type="button" class="sheet__close" data-close>close</button>
+
+    <h2 class="sheet__title" id="about-title">more about me</h2>
+
+    <p>
+      I'm Lisa. I play piano, a lot. Also some guitar and ukulele, a bit of
+      bass and drums, and I sing.
+    </p>
+    <p>
+      My favourite game: put on a random song, take it apart by ear as fast as
+      I can (chords, inversions, melodies, countermelodies), play it back, and
+      then jam with it.
+    </p>
+
+    <h3 class="sheet__sub">with other people</h3>
+    <dl class="facts">
+      <div><dt>band</dt><dd>keys &amp; backing vocals in <em>Ceramic Doves</em></dd></div>
+      <div><dt>band-it 2025</dt><dd>3rd place</dd></div>
+      <div><dt>coaching</dt><dd>Moritz von Tobel, through Vorstadt Sounds' VSS Bounce</dd></div>
+      <div><dt>stages</dt><dd>Openair Greifensee, Moods, Althörnli Openair, Powerplay Nights, Vorstadt Sounds Festival</dd></div>
+      <div><dt>theatre</dt><dd>choir for a 20-person ensemble (an adaptation of “Zombie”) + an original song</dd></div>
+      <div><dt>solo</dt><dd>first song ever → on radio LFM two days after upload</dd></div>
+    </dl>
+
+    <figure class="sheet__photo">
+      <img src="media/ceramic-doves.jpg" alt="Ceramic Doves on stage at the Winterthurer Musikfestwochen, crowd in front of the stage" loading="lazy">
+      <figcaption>ceramic doves at the winterthurer musikfestwochen</figcaption>
+    </figure>
+  </div>
+</dialog>
+
+
+<!-- ===== SHEET: let's make something ===== -->
+<dialog class="sheet" id="together" aria-labelledby="together-title">
+  <div class="sheet__inner">
+    <button type="button" class="sheet__close" data-close>close</button>
+
+    <h2 class="sheet__title" id="together-title">let's make something.</h2>
+    <p>Pick whatever sounds fun. Any combination works:</p>
+
+    <div class="chips" id="chips">
+      <button type="button" class="chip" aria-pressed="false">co-write a song</button>
+      <button type="button" class="chip" aria-pressed="false">produce a track</button>
+      <button type="button" class="chip" aria-pressed="false">play keys in a band</button>
+      <button type="button" class="chip" aria-pressed="false">arrange a choir</button>
+      <button type="button" class="chip" aria-pressed="false">make music for theatre or film</button>
+      <button type="button" class="chip" aria-pressed="false">just jam</button>
+    </div>
+
+    <a class="cta" id="write-me" href="mailto:kontakt@lisa-gehrig.ch">write me <span aria-hidden="true">→</span></a>
+
+    <p class="sheet__aside">
+      Or send me a song you love. I'll take it apart by ear and we jam on it.
+    </p>
+
+    <p class="sheet__small">
+      <a href="mailto:kontakt@lisa-gehrig.ch">kontakt@lisa-gehrig.ch</a> ·
+      <a href="https://mx3.ch/lisagehrig" target="_blank" rel="noopener">mx3</a> ·
+      spotify? not yet. lol.
+    </p>
+  </div>
+</dialog>
+
+
+<script src="items.js"></script>
+<script src="app.js"></script>
+<script src="piano.js"></script>
+</body>
+</html>

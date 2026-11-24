@@ -1,0 +1,728 @@
+/* ==========================================================================
+   Lisa Gehrig: music page
+
+    1. Colours, sizes, motion
+    2. Base
+    3. Layout: one calm screen on big displays
+    4. Left: name, intro, menu
+    5. Stage: cassette, video, photo, "coming soon"
+    6. Right: the story panel
+    7. Bottom: the strip
+    8. Toy piano
+    9. Sheets ("more about me", "let's make something")
+   10. Small screens: everything stacks
+   11. Less motion, for people who asked their device for it
+   ========================================================================== */
+
+
+/* ---------- 1. Colours, sizes, motion ---------- */
+
+:root {
+  --paper: #f4f0ea;
+  --tint: var(--paper);          /* changes with the selected card (app.js) */
+  --ink: #1d1a17;
+  --ink-soft: #4a433c;
+  --muted: #7d746b;
+  --hair: rgba(29, 26, 23, 0.14);
+  --pink: #ff3fa8;               /* the lava-lamp pink from the main page */
+  --tape: #231f1c;
+
+  --pad: clamp(20px, 3vw, 46px);
+  --side: clamp(250px, 23vw, 330px);
+  --info: clamp(280px, 25vw, 380px);
+  --strip: clamp(230px, 35vh, 340px);
+  --cover-h: calc(var(--strip) - 62px);   /* strip minus the two label lines */
+  --cover-w: calc(var(--cover-h) * 0.75); /* 3:4 cards */
+
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);  /* fast start, soft landing */
+}
+
+
+/* ---------- 2. Base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--tint);
+  color: var(--ink);
+  font: 15px/1.55 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.9s var(--ease);
+}
+
+/* no page scrolling behind an open sheet */
+body:has(dialog[open]) { overflow: hidden; }
+
+h1, h2, h3, p, ul, dl, dd, figure { margin: 0; padding: 0; }
+ul { list-style: none; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* little serif-italic accents inside normal text */
+em { font-family: var(--serif); font-size: 1.1em; }
+
+:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 4px; }
+
+
+/* ---------- 3. Layout: one calm screen on big displays ---------- */
+
+.app {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--side) minmax(0, 1fr) var(--info);
+  grid-template-rows: minmax(0, 1fr) auto var(--strip);
+  grid-template-areas:
+    "side  stage panel"
+    "toy   stage panel"
+    "strip strip strip";
+  column-gap: var(--pad);
+  padding-top: var(--pad);
+}
+
+.side  { grid-area: side;  padding-left: var(--pad); overflow-y: auto; }
+.toy   { grid-area: toy;   padding: 16px 0 22px var(--pad); }
+.stage { grid-area: stage; }
+.panel { grid-area: panel; }
+.strip { grid-area: strip; }
+
+
+/* ---------- 4. Left: name, intro, menu ---------- */
+
+.name {
+  font-size: clamp(26px, 2.3vw, 34px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.intro {
+  margin-top: 12px;
+  max-width: 34ch;
+  color: var(--ink-soft);
+}
+.intro em { color: var(--ink); }
+
+.menu {
+  margin-top: 24px;
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+}
+.menu > * {
+  font-size: 16px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.menu > *:hover { color: var(--ink); }
+
+/* "let's make something" gets a blinking record light */
+.menu .menu__hot { color: var(--ink); }
+.menu__hot::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 8px;
+  vertical-align: 2px;
+  border-radius: 50%;
+  background: var(--pink);
+  animation: rec 1.6s ease-in-out infinite;
+}
+@keyframes rec { 50% { opacity: 0.25; } }
+
+
+/* ---------- 5. Stage: cassette, video, photo, "coming soon" ---------- */
+
+.stage {
+  --room: calc(100vh - var(--strip) - var(--pad) - 24px);  /* height we may use */
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding-bottom: 24px;
+}
+@supports (height: 100dvh) {
+  .stage { --room: calc(100dvh - var(--strip) - var(--pad) - 24px); }
+}
+
+/* whatever arrives on stage glides in */
+.stage > * { animation: arrive 0.7s var(--ease) both; }
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+}
+
+/* --- the cassette --- */
+
+.deck {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  width: min(100%, 560px, (var(--room) - 80px) * 1.58);
+}
+
+.tape {
+  --p: 0;                        /* song progress 0…1, set by app.js */
+  container-type: inline-size;   /* so everything inside can be sized in cqw */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.58;
+  border-radius: 4.5% / 7%;
+  background: linear-gradient(165deg, #36312d, var(--tape) 45%, #141110);
+  box-shadow:
+    0 50px 90px -40px rgba(29, 26, 23, 0.6),
+    0 18px 30px -18px rgba(29, 26, 23, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  cursor: pointer;
+  transition: transform 0.6s var(--ease);
+}
+.tape:hover { transform: translateY(-4px) rotate(-0.6deg); }
+
+/* paper label with the cover photo */
+.tape__label {
+  position: absolute;
+  inset: 6% 5.5% 27%;
+  overflow: hidden;
+  border-radius: 1.2cqw;
+  background: #e9dfd2;
+}
+.tape__art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85);
+}
+.tape__band {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 2cqw;
+  padding: 1.6cqw 2.4cqw;
+  background: rgba(247, 242, 234, 0.93);
+  font-size: 2.3cqw;
+}
+.tape__side { font-weight: 600; }
+.tape__title {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: italic 4cqw/1 var(--serif);
+}
+.tape__by { color: var(--muted); letter-spacing: 0.1em; }
+
+/* the window with the two reels */
+.tape__window {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 44%;
+  height: 23%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(24, 20, 18, 0.85);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+.reel { position: absolute; top: 50%; }   /* just a centre point */
+.reel--left  { left: 22%; }
+.reel--right { left: 78%; }
+
+/* both are centred on that point with plain offsets, so they spin and grow around their own middle */
+.reel__pack,
+.reel__hub {
+  position: absolute;
+  left: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+}
+
+/* the wound-up tape: moves from the left reel to the right one as the song plays */
+.reel__pack {
+  --size: 27cqw;
+  background: radial-gradient(circle, #523b2e 0 58%, #3c2b22 59%);
+  transition: scale 0.5s linear;
+}
+.reel--left  .reel__pack { scale: calc(1 - var(--p) * 0.62); }
+.reel--right .reel__pack { scale: calc(0.38 + var(--p) * 0.62); }
+
+.reel__hub {
+  --size: 8.5cqw;
+  background:
+    radial-gradient(circle, #1b1715 0 24%, transparent 25%),
+    repeating-conic-gradient(rgba(0, 0, 0, 0.4) 0 9deg, transparent 9deg 60deg),
+    #ece5da;
+  animation: spin 2.2s linear infinite paused;
+}
+.tape.is-playing .reel__hub { animation-play-state: running; }
+@keyframes spin { to { rotate: 360deg; } }
+
+/* the bottom part with the tape guides */
+.tape__base {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 19%;
+  clip-path: polygon(7% 0, 93% 0, 100% 100%, 0 100%);
+  background: linear-gradient(#2e2a26, #1c1916);
+}
+
+/* play button, progress, time */
+.controls {
+  width: min(100%, 440px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.play {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  transition: transform 0.3s var(--ease), background-color 0.3s;
+}
+.play:hover { transform: scale(1.07); background: var(--pink); }
+.play .icon-pause,
+.play.is-playing .icon-play { display: none; }
+.play.is-playing .icon-pause { display: block; }
+
+.seek {
+  flex: 1;
+  margin: 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.time {
+  min-width: 84px;
+  text-align: right;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* --- video and photo --- */
+
+.screen,
+.photo {
+  max-width: 100%;
+  max-height: var(--room);
+  border-radius: 10px;
+  background: var(--ink);
+  box-shadow: 0 40px 80px -40px rgba(29, 26, 23, 0.6);
+}
+.photo { object-fit: cover; }
+
+/* --- "coming soon": a note pinned to the wall --- */
+
+.soon {
+  width: min(100%, 360px);
+  aspect-ratio: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+  border-radius: 6px;
+  background: #fffdf8;
+  box-shadow: 0 30px 60px -30px rgba(29, 26, 23, 0.45);
+  rotate: -1.5deg;
+}
+.soon__title { font: italic 400 clamp(34px, 3.4vw, 48px)/1 var(--serif); }
+.soon__note { color: var(--ink-soft); max-width: 24ch; }
+
+
+/* ---------- 6. Right: the story panel ---------- */
+
+.panel {
+  padding: 2px var(--pad) 48px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* text softly fades out at the bottom edge instead of being cut off */
+  -webkit-mask-image: linear-gradient(#000 calc(100% - 56px), transparent);
+          mask-image: linear-gradient(#000 calc(100% - 56px), transparent);
+  transition: opacity 0.2s ease;
+}
+.panel.is-fading { opacity: 0; }
+
+.panel__kicker {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.panel__title {
+  margin-top: 6px;
+  font: italic 400 clamp(32px, 3vw, 44px)/1.02 var(--serif);
+  letter-spacing: -0.01em;
+}
+
+.panel__title + .panel__text { margin-top: 18px; }
+
+.credits {
+  margin: 22px 0 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hair);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.credits div { display: flex; justify-content: space-between; gap: 16px; }
+.credits dt { color: var(--muted); }
+.credits dd { text-align: right; }
+
+.panel__text { display: grid; gap: 10px; color: var(--ink-soft); }
+
+.panel__links {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-size: 14px;
+}
+.panel__links a {
+  text-decoration: underline;
+  text-decoration-color: var(--hair);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.3s;
+}
+.panel__links a:hover { text-decoration-color: currentColor; }
+
+.panel__cta {
+  margin-top: 24px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+.panel__cta:hover { background: var(--pink); }
+
+
+/* ---------- 7. Bottom: the strip ---------- */
+
+.strip {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.strip::-webkit-scrollbar { display: none; }
+
+.strip__list {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  min-width: 100%;               /* few cards: they stretch to fill the row */
+  padding: 0 var(--pad);
+}
+
+.strip__list > li {
+  flex: 1 0 var(--cover-w);      /* many cards: 3:4 each, and the strip scrolls */
+  max-width: calc(var(--cover-w) * 1.5);
+}
+
+.card {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  padding-top: 8px;
+  text-align: left;
+}
+
+.card__label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.card__title,
+.card__tag { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.card__tag { grid-column: 2; color: var(--muted); }
+
+.card__dot {
+  width: 8px;
+  height: 8px;
+  border: 1.3px solid currentColor;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+.card[aria-pressed="true"] .card__dot { background: currentColor; }
+body.is-playing .card[aria-pressed="true"] .card__dot {
+  border-color: var(--pink);
+  background: var(--pink);
+  animation: rec 1.2s ease-in-out infinite;
+}
+
+.card__cover {
+  display: block;
+  height: var(--cover-h);
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--hair);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.card:hover .card__cover { transform: translateY(-4px); box-shadow: 0 16px 30px -18px rgba(29, 26, 23, 0.5); }
+.card:hover .card__cover img { transform: scale(1.04); }
+
+/* cards without a picture yet: big title on the item's colour */
+.card__cover--type {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.card__big { font: italic 400 clamp(24px, 2.3vw, 34px)/1 var(--serif); }
+.card__soon {
+  align-self: flex-start;
+  padding: 3px 9px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* "things I made ▾" gives the cards a little hello-wave */
+.strip.is-waving .card { animation: wave 0.7s var(--ease) calc(var(--i) * 60ms); }
+@keyframes wave { 40% { transform: translateY(-10px); } }
+
+
+/* ---------- 8. Toy piano ---------- */
+
+.toy__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.toy__title { font: italic 400 21px/1.1 var(--serif); }
+
+.toy__jam {
+  padding: 5px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12.5px;
+  white-space: nowrap;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+.toy__jam:hover { background: var(--ink); color: var(--paper); }
+.toy__jam[aria-pressed="true"] { background: var(--pink); border-color: var(--pink); color: #fff; }
+
+.keys {
+  --black-w: 6.4%;
+  display: flex;
+  height: 88px;
+  margin-top: 12px;
+  touch-action: none;          /* sliding over the keys plays them instead of scrolling */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.key {
+  flex: 1;
+  margin-left: -1px;           /* neighbours share one border */
+  border: 1px solid rgba(29, 26, 23, 0.28);
+  border-radius: 0 0 5px 5px;
+  background: #fcfaf6;
+  cursor: pointer;
+  transition: background-color 0.25s, transform 0.08s;
+}
+/* black keys take no room of their own: they sit on the line between two white keys */
+.key--black {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 var(--black-w);
+  height: 60%;
+  margin: 0 calc(var(--black-w) / -2);
+  border-color: var(--ink);
+  background: var(--ink);
+}
+.key.fits { background: #ffd5ec; }              /* notes of the chord we're on */
+.key--black.fits { background: #b93a7c; }
+.key.is-down { background: var(--pink); transform: translateY(1px); }
+
+.toy__chords {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  font: italic 18px/1 var(--serif);
+}
+.toy__chords span { opacity: 0.3; transition: opacity 0.3s, color 0.3s; }
+.toy__chords .is-now { opacity: 1; color: var(--pink); }
+
+.toy__hint {
+  margin-top: 8px;
+  max-width: 36ch;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+
+/* ---------- 9. Sheets ---------- */
+
+.sheet {
+  width: min(640px, calc(100% - 32px));
+  max-height: min(88vh, 900px);
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 40px 120px -40px rgba(29, 26, 23, 0.55);
+  overscroll-behavior: contain;
+}
+.sheet::backdrop {
+  background: rgba(244, 240, 234, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+}
+
+.sheet[open],
+.sheet[open]::backdrop { animation: sheet-in 0.5s var(--ease); }
+.sheet.is-closing,
+.sheet.is-closing::backdrop { animation: sheet-out 0.25s ease forwards; }
+@keyframes sheet-in  { from { opacity: 0; transform: translateY(18px); } }
+@keyframes sheet-out { to   { opacity: 0; transform: translateY(10px); } }
+
+/* the padding lives on the inside, so a click on the dimmed area (= the dialog itself) can close it */
+.sheet__inner {
+  display: grid;
+  gap: 14px;
+  padding: clamp(26px, 5vw, 48px);
+}
+
+.sheet__close {
+  justify-self: end;
+  margin: -8px -8px 0 0;
+  padding: 6px 10px;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+.sheet__close:hover { color: var(--ink); }
+
+.sheet__title { font: italic 400 clamp(34px, 5vw, 48px)/1 var(--serif); margin-bottom: 4px; }
+.sheet__sub {
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sheet__aside { color: var(--ink-soft); }
+.sheet__small { font-size: 13.5px; color: var(--muted); }
+
+.facts { border-top: 1px solid var(--hair); }
+.facts div {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 14.5px;
+}
+.facts dt { color: var(--muted); }
+
+.sheet__photo { margin-top: 10px; }
+.sheet__photo img { width: 100%; border-radius: 8px; }
+.sheet__photo figcaption { margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 8px 14px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.chip[aria-pressed="true"]::before { content: "✓ "; }
+
+.cta {
+  justify-self: start;
+  margin: 8px 0 6px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--pink);
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 12px 30px -12px rgba(255, 63, 168, 0.7);
+  transition: transform 0.3s var(--ease);
+}
+.cta:hover { transform: translateY(-2px); }
+
+
+/* ---------- 10. Small screens: everything stacks ---------- */
+
+@media (max-width: 900px) {
+  :root { --strip: 300px; }
+
+  .app {
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas: "side" "stage" "panel" "strip" "toy";
+    row-gap: 40px;
+    padding: var(--pad) 0 56px;
+  }
+  .side, .stage, .panel, .toy { padding-inline: var(--pad); }
+  .side, .panel { overflow: visible; }
+  .panel { -webkit-mask-image: none; mask-image: none; padding-bottom: 0; }
+  .stage { --room: 70vh; padding-bottom: 0; }
+  .deck { width: min(100%, 560px); }
+  .strip { height: var(--strip); }
+  .toy { padding-bottom: 0; max-width: 460px; }
+}
+
+/* short laptop screens: give the screen back to the music */
+@media (min-width: 901px) and (max-height: 760px) {
+  .toy__hint { display: none; }
+  .keys { height: 70px; }
+}
+
+
+/* ---------- 11. Less motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
