@@ -8,7 +8,7 @@
   <meta name="author" content="Lisa Gehrig">
   <meta property="og:title" content="Lisa Gehrig: let's make music">
   <meta property="og:description" content="Pianist, songwriter and bedroom producer from Zürich. My first song went from my bedroom to the radio in two days. Let's make something together.">
-  <link rel="icon" type="image/png" href="../icon.png">
+  <link rel="icon" type="image/png" href="lava_lamp/icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,13 +24,14 @@
     <h1 class="name">Lisa Gehrig</h1>
 
     <p class="intro">
-      Pianist, songwriter &amp; bedroom producer from Zürich.
-      I hear a song, take it apart by ear, and then jam with it.
+      Pianist, songwriter &amp; producer from Zürich.
       My first song went from my bedroom to the radio in two days.
-      <em>Wanna make something?</em>
+      Got a song sitting on your chest?
+      <em>Let's give it a shape.</em>
     </p>
 
     <nav class="menu" aria-label="Menu">
+      <button type="button" data-open="why">why make a song with me?</button>
       <button type="button" data-open="about">more about me</button>
       <button type="button" data-open="together" class="menu__hot">let's make something</button>
       <a href="#strip">things I made <span aria-hidden="true">▾</span></a>
@@ -67,6 +68,50 @@
 <audio id="song" preload="metadata"></audio>
 
 
+<!-- ===== SHEET: why make a song with me ===== -->
+<dialog class="sheet" id="why" aria-labelledby="why-title">
+  <div class="sheet__inner">
+    <button type="button" class="sheet__close" data-close>close</button>
+
+    <h2 class="sheet__title" id="why-title">why make a song with me?</h2>
+
+    <p class="sheet__lead">
+      So many people carry a story or a feeling that wants to become a song.
+      A melody hummed on the way home, a few lines in a notes app, a chorus
+      that won't leave you alone. Most of them never get a form.
+    </p>
+    <p>
+      Helping people give it one has been my dream for years. Sitting down
+      together and finding the song that's already in there: the chords, the
+      melody, the words that are actually true.
+    </p>
+
+    <h3 class="sheet__sub">how it works</h3>
+    <dl class="facts">
+      <div><dt>you bring</dt><dd>a feeling, a story, a voice memo, half a chorus. Anything.</dd></div>
+      <div><dt>we explore</dt><dd>playfully, without judgement. We try things, keep what feels true, let go of the rest.</dd></div>
+      <div><dt>we shape it</dt><dd>layer by layer, until a vague idea becomes something specific you can hold, play and send to people.</dd></div>
+    </dl>
+
+    <h3 class="sheet__sub">why with me</h3>
+    <dl class="facts">
+      <div><dt>by ear</dt><dd>I hear harmony fast, so we spend our time on your song, not on theory.</dd></div>
+      <div><dt>start to finish</dt><dd>writing, arranging, recording, mixing, mastering: all in one place.</dd></div>
+      <div><dt>psychology</dt><dd>I'm doing my master's at UZH. I care about making a space where honest feelings are welcome.</dd></div>
+      <div><dt>free</dt><dd>I don't charge for this. I do it because I love it.</dd></div>
+    </dl>
+
+    <p class="sheet__aside">
+      AI can generate a song in seconds now. But so much of the joy is in the
+      craft: in the process, in hearing music turn into an experience, layer by
+      layer. I'd love to share that with you.
+    </p>
+
+    <button type="button" class="cta" data-open="together">let's make something <span aria-hidden="true">→</span></button>
+  </div>
+</dialog>
+
+
 <!-- ===== SHEET: more about me ===== -->
 <dialog class="sheet" id="about" aria-labelledby="about-title">
   <div class="sheet__inner">
@@ -86,6 +131,7 @@
 
     <h3 class="sheet__sub">with other people</h3>
     <dl class="facts">
+      <div><dt>studies</dt><dd>master's in psychology at UZH</dd></div>
       <div><dt>band</dt><dd>keys &amp; backing vocals in <em>Ceramic Doves</em></dd></div>
       <div><dt>band-it 2025</dt><dd>3rd place</dd></div>
       <div><dt>coaching</dt><dd>Moritz von Tobel, through Vorstadt Sounds' VSS Bounce</dd></div>
@@ -108,9 +154,10 @@
     <button type="button" class="sheet__close" data-close>close</button>
 
     <h2 class="sheet__title" id="together-title">let's make something.</h2>
-    <p>Pick whatever sounds fun. Any combination works:</p>
+    <p>Pick whatever sounds right. Any combination works, and it's free.</p>
 
     <div class="chips" id="chips">
+      <button type="button" class="chip" aria-pressed="false">turn my idea into a song</button>
       <button type="button" class="chip" aria-pressed="false">co-write a song</button>
       <button type="button" class="chip" aria-pressed="false">produce a track</button>
       <button type="button" class="chip" aria-pressed="false">play keys in a band</button>
@@ -122,7 +169,8 @@
     <a class="cta" id="write-me" href="mailto:kontakt@lisa-gehrig.ch">write me <span aria-hidden="true">→</span></a>
 
     <p class="sheet__aside">
-      Or send me a song you love. I'll take it apart by ear and we jam on it.
+      A voice memo, a few lines in your notes app, a feeling you can't name yet:
+      that's plenty to start with.
     </p>
 
     <p class="sheet__small">

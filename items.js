@@ -54,7 +54,7 @@ const ITEMS = [
       ["promotion", "nobody. i told no one."],
     ],
     text: [
-      "The first song I ever finished. Made alone in my bedroom with a 130 CHF guitar, a Focusrite and an SM58.",
+      "The first song I ever finished. I wrote it, played every instrument, recorded, mixed and mastered it myself, in my bedroom.",
       "I put it on mx3 and told nobody. Two days later, radio LFM found it, played it at prime time and introduced me as a new artist people should discover.",
       "<em>Now imagine what we could make together.</em>",
     ],
@@ -78,7 +78,7 @@ const ITEMS = [
     ],
     text: [
       "My favourite game: hear a song, take it apart by ear as fast as I can (chords, inversions, melody, countermelodies), then build it back up, track by track.",
-      "This one was worth every minute.",
+      "Rebuilding a song like this teaches you how it's made, and that's exactly what I bring to yours.",
     ],
     links: [],
   },
@@ -95,7 +95,7 @@ const ITEMS = [
       ["written, played & sung", "lisa"],
     ],
     text: [
-      "No production, no tricks. Just a piano, my voice and a song I wrote.",
+      "Just a piano, my voice and a song I wrote. Before any production, a song has to work like this.",
     ],
     links: [],
   },
@@ -110,10 +110,10 @@ const ITEMS = [
     video: "media/clips/boogie.mp4",
     credits: [
       ["piano", "lisa & a friend"],
-      ["plan", "none whatsoever"],
+      ["arrangement", "made up on the spot"],
     ],
     text: [
-      "The concert was over, the piano was still there. A friend and I improvised a boogie: nothing planned, just two people having way too much fun.",
+      "After a concert, a friend and I sat down at the piano and improvised a boogie, four hands, listening to each other. That's what making music together feels like at its best.",
     ],
     links: [],
   },
@@ -152,7 +152,7 @@ const ITEMS = [
       ["photo", "Jeremie Luke Dubois"],
     ],
     text: [
-      "My former band. Loud, sweaty, a lot of fun.",
+      "My former band: years of rehearsing, writing and playing live together.",
       "We played Openair Greifensee (same bill as Lo & Leduc), Moods, Althörnli Openair, Powerplay Nights and Vorstadt Sounds Festival.",
     ],
     links: [
