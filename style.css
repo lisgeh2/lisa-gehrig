@@ -81,11 +81,12 @@ em { font-family: var(--serif); font-size: 1.1em; }
 /* ---------- 3. Layout: one calm screen on big displays ---------- */
 
 .app {
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: var(--side) minmax(0, 1fr) var(--info);
-  grid-template-rows: minmax(0, 1fr) auto var(--strip);
+  /* the top row is never smaller than the left column's content: no inner scrollbar, ever */
+  grid-template-rows: minmax(min-content, 1fr) auto var(--strip);
   grid-template-areas:
     "side  stage panel"
     "toy   stage panel"
@@ -94,7 +95,9 @@ em { font-family: var(--serif); font-size: 1.1em; }
   padding-top: var(--pad);
 }
 
-.side  { grid-area: side;  padding-left: var(--pad); overflow-y: auto; }
+.side  { grid-area: side;  padding-left: var(--pad); }
+/* stage and panel just fill the space they get; only the left column decides the height */
+.stage, .panel { contain: size; }
 .toy   { grid-area: toy;   padding: 16px 0 22px var(--pad); }
 .stage { grid-area: stage; }
 .panel { grid-area: panel; }
@@ -620,7 +623,7 @@ body.is-playing .card[aria-pressed="true"] .card__dot {
 .keys {
   --black-w: 6.4%;
   display: flex;
-  height: 88px;
+  height: clamp(52px, 8vh, 88px);   /* smaller keys on shorter screens */
   margin-top: 12px;
   touch-action: none;          /* sliding over the keys plays them instead of scrolling */
   user-select: none;
@@ -780,6 +783,7 @@ button.cta { font: inherit; font-weight: 500; cursor: pointer; }
   }
   .side, .stage, .panel, .toy { padding-inline: var(--pad); }
   .side, .panel { overflow: visible; }
+  .stage, .panel { contain: none; }
   .panel { -webkit-mask-image: none; mask-image: none; padding-bottom: 0; }
   .stage { --room: 70vh; padding-bottom: 0; }
   .deck { width: min(100%, 560px); }
@@ -788,9 +792,8 @@ button.cta { font: inherit; font-weight: 500; cursor: pointer; }
 }
 
 /* short laptop screens: give the screen back to the music */
-@media (min-width: 901px) and (max-height: 900px) {
+@media (min-width: 901px) and (max-height: 1000px) {
   .toy__hint { display: none; }
-  .keys { height: 70px; }
   .toy { padding-top: 8px; padding-bottom: 14px; }
   .menu { margin-top: 18px; }
 }
